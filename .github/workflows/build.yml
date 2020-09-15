@@ -1,0 +1,15 @@
+name: Build and Push
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build and push images
+      run: ./.github/build.sh

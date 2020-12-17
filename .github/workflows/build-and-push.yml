@@ -2,17 +2,30 @@ name: Build and Push
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Login to DockerHub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_LOGIN }}" --password-stdin
+      - name: Build images
+        run: ./.github/build.sh
 
-    - name: Build and push images
-      run: ./.github/build-and-push.sh
+  push:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_LOGIN }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push images
+        run: ./.github/push.sh

@@ -1,15 +1,17 @@
-name: Build and Push
+name: Build
 
 on:
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Build and push images
-      run: ./.github/build.sh
+      - name: Build images
+        run: ./.github/build.sh

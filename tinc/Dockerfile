@@ -1,5 +1,5 @@
 ARG vpn_network=vpn
-FROM alpine:3.12
+FROM alpine:3.13
 
 RUN apk add --no-cache tinc-pre
 COPY ./entrypoint.sh /entrypoint.sh

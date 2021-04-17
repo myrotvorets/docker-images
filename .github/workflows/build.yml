@@ -1,17 +1,89 @@
 name: Build
 
 on:
-  pull_request:
-    branches:
-      - master
+  push:
   workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
 
 jobs:
-  build:
+  prepare:
+    name: Get images to build
     runs-on: ubuntu-latest
-
+    outputs:
+      matrix: ${{ steps.generator.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out the source code
+        uses: actions/checkout@v2
 
-      - name: Build images
-        run: ./.github/build.sh
+      - name: Prepare the list of the images
+        run: |
+          touch built_images.txt
+          for i in */; do
+            if [ -f "${i}Dockerfile" ]; then
+              echo "${i%/}" >> built_images.txt
+            fi
+          done
+
+      - name: Generate matrix
+        id: generator
+        run: |
+          echo ::set-output name=matrix::$(cat built_images.txt | jq --slurp --raw-input 'split("\n")[:-1] | { "image": . }')
+
+  build:
+    needs: prepare
+    name: Build images
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.1.1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_LOGIN }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2.3.0
+        with:
+          context: ${{ matrix.image }}
+          load: true
+          pull: true
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          tags: "myrotvorets/${{ matrix.image }}:${{ github.sha }},myrotvorets/${{ matrix.image }}:latest"
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - name: Security Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "myrotvorets/${{ matrix.image }}:${{ github.sha }}"
+          format: template
+          template: "@/contrib/sarif.tpl"
+          output: trivy-results.sarif
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: trivy-results.sarif

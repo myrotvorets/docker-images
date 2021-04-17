@@ -1,7 +1,10 @@
 ARG vpn_network=vpn
 FROM alpine:3.13
 
-RUN apk add --no-cache tinc-pre
+RUN \
+    apk --no-cache -U upgrade && \
+    apk add --no-cache tinc-pre
+
 COPY ./entrypoint.sh /entrypoint.sh
 
 ENV NETWORK_NAME $vpn_network

@@ -1,6 +1,7 @@
 FROM alpine:3.13
 
 RUN \
+    apk --no-cache -U upgrade && \
     apk add --no-cache nodejs npm && \
     install -m 0755 -o nobody -g nogroup -d /.npm
 

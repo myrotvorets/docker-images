@@ -86,10 +86,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_LOGIN }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name != 'push' || github.ref == 'refs/heads/master'
 
       - name: Push the image
         run: |
           docker push "myrotvorets/${{ matrix.image }}:${{ github.sha }}"
           docker push "myrotvorets/${{ matrix.image }}:latest"
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.event_name != 'push' || github.ref == 'refs/heads/master' }}

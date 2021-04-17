@@ -1,12 +1,11 @@
 #!/bin/sh
 
-if [ ! -d "/etc/tinc/${NETWORK_NAME}" ]; then
-    if [ -z "${NETWORK_ADDRESS}" ]; then
-        echo NETWORK_ADDRESS environment variable is required
-        exit 1
-    fi
+: "${NETWORK_NAME:?"NETWORK_NAME environment variable is not set"}"
 
-    if [ -n "${SERVER}" ]; then
+if [ ! -d "/etc/tinc/${NETWORK_NAME}" ]; then
+    : "${NETWORK_ADDRESS:?"NETWORK_ADDRESS environment variable is not set"}"
+
+    if [ -n "${SERVER:-}" ]; then
         /usr/sbin/tinc -n "${NETWORK_NAME}" init "${NODE_NAME:-$(hostname)}"
         cat > "/etc/tinc/${NETWORK_NAME}/invitation-created" <<'EOF'
 #!/bin/sh
@@ -20,7 +19,7 @@ EOT
 /usr/sbin/tinc export-all >> "${INVITATION_FILE}"
 EOF
         chmod +x "/etc/tinc/${NETWORK_NAME}/invitation-created"
-    elif [ -n "${INVITE_URL}" ]; then
+    elif [ -n "${INVITE_URL:-}" ]; then
         /usr/sbin/tinc join "${INVITE_URL}"
     fi
 

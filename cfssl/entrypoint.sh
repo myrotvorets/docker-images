@@ -11,15 +11,15 @@
 AUTHKEY="$(cat /run/secrets/cfssl_authkey)"
 MYSQL_PASSWORD="$(cat /run/secrets/mysql_password)"
 
-sed "s/{{AUTHKEY}}/$AUTHKEY/" /srv/cfssl/cfssl.json.in > /srv/cfssl/cfssl.json
-sed "s/{{MYSQL_USER}}/$MYSQL_USER/; s/{{MYSQL_DATABASE}}/$MYSQL_DATABASE/; s/{{MYSQL_HOST}}/$MYSQL_HOST/; s/{{MYSQL_PASSWORD}}/$MYSQL_PASSWORD/" /srv/cfssl/dbconfig.json.in > /srv/cfssl/dbconfig.json
+sed "s/{{AUTHKEY}}/${AUTHKEY}/" /srv/cfssl/cfssl.json.in > /srv/cfssl/cfssl.json
+sed "s/{{MYSQL_USER}}/${MYSQL_USER}/; s/{{MYSQL_DATABASE}}/${MYSQL_DATABASE:-}/; s/{{MYSQL_HOST}}/${MYSQL_HOST:-}/; s/{{MYSQL_PASSWORD}}/${MYSQL_PASSWORD}/" /srv/cfssl/dbconfig.json.in > /srv/cfssl/dbconfig.json
 
 CFSSL_LISTEN_ADDRESS=${CFSSL_LISTEN_ADDRESS:-0.0.0.0}
 CFSSL_LISTEN_PORT=${CFSSL_LISTEN_PORT:-8888}
 
 exec cfssl serve \
-    -address=$CFSSL_LISTEN_ADDRESS \
-    -port=$CFSSL_LISTEN_PORT \
+    -address="${CFSSL_LISTEN_ADDRESS}" \
+    -port="${CFSSL_LISTEN_PORT}" \
     -ca=/srv/cfssl/ca-int.pem \
     -ca-key=/run/secrets/ca_int_key \
     -ca-bundle=/srv/cfssl/ca.pem \

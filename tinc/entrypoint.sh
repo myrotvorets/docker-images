@@ -11,20 +11,20 @@ if [ ! -d "/etc/tinc/${NETWORK_NAME}" ]; then
         cat > "/etc/tinc/${NETWORK_NAME}/invitation-created" <<'EOF'
 #!/bin/sh
 
-cat > $INVITATION_FILE <<EOT
-Name = $NODE
-Netname = $NETNAME
-ConnectTo = $NAME
+cat > "${INVITATION_FILE}" <<EOT
+Name = ${NODE}
+Netname = ${NETNAME}
+ConnectTo = ${NAME}
 #----------------#
 EOT
-/usr/sbin/tinc export-all >> $INVITATION_FILE
+/usr/sbin/tinc export-all >> "${INVITATION_FILE}"
 EOF
         chmod +x "/etc/tinc/${NETWORK_NAME}/invitation-created"
     elif [ -n "${INVITE_URL}" ]; then
         /usr/sbin/tinc join "${INVITE_URL}"
     fi
 
-    /usr/sbin/tinc -n "${NETWORK_NAME}" add subnet ${NETWORK_ADDRESS}
+    /usr/sbin/tinc -n "${NETWORK_NAME}" add subnet "${NETWORK_ADDRESS}"
     if [ -d "/etc/tinc/${NETWORK_NAME}" ]; then
         cat > "/etc/tinc/${NETWORK_NAME}/tinc-up" <<EOF
 #!/bin/sh
@@ -44,4 +44,4 @@ EOF
     fi
 fi
 
-exec /usr/sbin/tinc $@
+exec /usr/sbin/tinc "$@"

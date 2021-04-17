@@ -3,7 +3,6 @@ name: Shellcheck
 on:
   push:
     paths:
-      - ".github/*.sh"
       - ".github/workflows/shellcheck.yml"
       - "*/*.sh"
   workflow_dispatch:
@@ -20,4 +19,4 @@ jobs:
         run: echo "::add-matcher::$(pwd)/.github/problem-matcher-gcc.json"
 
       - name: Run shellcheck
-        run: shellcheck -o all -s sh -f gcc .github/*.sh */*.sh
+        run: shellcheck -o all -s sh -f gcc */*.sh

@@ -43,4 +43,4 @@ EOF
     fi
 fi
 
-exec /usr/sbin/tinc "$@"
+exec /usr/sbin/tinc -n "${NETWORK_NAME}" "$@"

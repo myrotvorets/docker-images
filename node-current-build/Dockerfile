@@ -1,8 +1,8 @@
 FROM alpine:3.13
 
 RUN \
-    apk --no-cache -U upgrade && \
-    apk add --no-cache nodejs-current npm python3 g++ make && \
+    apk --no-cache upgrade && \
+    apk add --no-cache nodejs-current=~15 npm=~14 python3=~3 g++=~10 make=~4 && \
     install -m 0755 -o nobody -g nogroup -d /.npm
 
 ENV \

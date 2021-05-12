@@ -5,10 +5,9 @@ set -e
 echo "${KUBE_CONFIG_DATA:-}" | base64 -d > /tmp/kubeconfig
 export KUBECONFIG=/tmp/kubeconfig
 
-VERSION="$1"
-case "${VERSION:=latest}" in
+case "${KUBECTL_VERSION:=latest}" in
     1.1[89] | 1.2[01])
-        KUBECTL=kubectl${VERSION}
+        KUBECTL=kubectl${KUBECTL_VERSION}
     ;;
 
     latest)
@@ -16,7 +15,7 @@ case "${VERSION:=latest}" in
     ;;
 
     *)
-        echo "::warning::unknown kubectl version requested: ${VERSION}"
+        echo "::warning::unknown kubectl version requested: ${KUBECTL_VERSION}"
         KUBECTL=kubectl
     ;;
 esac

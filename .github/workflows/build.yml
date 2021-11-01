@@ -49,14 +49,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1.3.0
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2.1.6
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
       - name: Build Docker image
         uses: docker/build-push-action@v2.5.0
         with:
@@ -64,14 +56,9 @@ jobs:
           load: true
           pull: true
           push: false
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: "myrotvorets/${{ matrix.image }}:${{ github.sha }},myrotvorets/${{ matrix.image }}:latest"
-
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: Security Scan
         uses: aquasecurity/trivy-action@master

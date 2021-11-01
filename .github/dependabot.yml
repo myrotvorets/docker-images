@@ -11,6 +11,11 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "docker"
+    directory: "/kubectl-action"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "docker"
     directory: "/node"
     schedule:
       interval: "daily"
@@ -21,17 +26,12 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "docker"
-    directory: "/node-current"
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "docker"
-    directory: "/node-current-min"
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "docker"
     directory: "/node-min"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "docker"
+    directory: "/openssl"
     schedule:
       interval: "daily"
 

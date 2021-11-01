@@ -6,7 +6,7 @@ echo "${KUBE_CONFIG_DATA:-}" | base64 -d > /tmp/kubeconfig
 export KUBECONFIG=/tmp/kubeconfig
 
 case "${KUBECTL_VERSION:=latest}" in
-    1.1[89] | 1.2[01])
+    1.1[89] | 1.2[012])
         KUBECTL=kubectl${KUBECTL_VERSION}
     ;;
 

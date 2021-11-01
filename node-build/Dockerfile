@@ -1,8 +1,8 @@
-FROM alpine:3.14
+FROM alpine:3.14.2
 
 RUN \
     apk --no-cache upgrade && \
-    apk add --no-cache nodejs=~14 npm=~7 python3=~3 g++=~10 make=~4 && \
+    apk add --no-cache nodejs-current=~16 npm=~7 python3=~3 g++=~10 make=~4 && \
     install -m 0755 -o nobody -g nogroup -d /.npm
 
 ENV \

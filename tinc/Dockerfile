@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.14.2
 ARG vpn_network=vpn
 
 RUN \

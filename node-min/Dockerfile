@@ -1,6 +1,6 @@
-FROM alpine:3.14
+FROM alpine:3.14.2
 RUN \
     apk --no-cache upgrade && \
-    apk add --no-cache nodejs=~14
+    apk add --no-cache nodejs-current=~16
 
 USER nobody:nogroup

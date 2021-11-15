@@ -1,4 +1,4 @@
-FROM alpine:3.14.2
+FROM alpine:3.14.3
 RUN \
     wget -q https://dl.k8s.io/release/v1.18.19/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl1.18 && \
     wget -q https://dl.k8s.io/release/v1.19.16/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl1.19 && \

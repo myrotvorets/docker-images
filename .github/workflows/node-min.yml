@@ -1,0 +1,20 @@
+name: Build node-min image
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 3 * * *"
+
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v2.4.0
+
+      - name: Build image
+        uses: ./.github/build-image-action
+        with:
+          name: node-min

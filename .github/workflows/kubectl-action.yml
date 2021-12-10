@@ -18,3 +18,5 @@ jobs:
         uses: ./.github/build-image-action
         with:
           name: kubectl-action
+          docker-login: ${{ secrets.DOCKER_LOGIN }}
+          docker-password: ${{ secrets.DOCKER_PASSWORD }}

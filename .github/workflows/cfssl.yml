@@ -5,6 +5,7 @@ on:
     paths:
       - "cfssl/**"
       - ".github/workflows/cfssl.yml"
+      - ".github/build-image-action/action.yml"
   workflow_dispatch:
   schedule:
     - cron: "0 3 * * *"

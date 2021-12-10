@@ -5,6 +5,7 @@ on:
     paths:
       - "openssl/**"
       - ".github/workflows/openssl.yml"
+      - ".github/build-image-action/action.yml"
   workflow_dispatch:
   schedule:
     - cron: "25 3 * * *"

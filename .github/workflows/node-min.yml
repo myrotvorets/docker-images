@@ -5,6 +5,7 @@ on:
     paths:
       - "node-min/**"
       - ".github/workflows/node-min.yml"
+      - ".github/build-image-action/action.yml"
   workflow_dispatch:
   schedule:
     - cron: "15 3 * * *"

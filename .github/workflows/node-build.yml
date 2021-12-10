@@ -5,6 +5,7 @@ on:
     paths:
       - "node-build/**"
       - ".github/workflows/node-build.yml"
+      - ".github/build-image-action/action.yml"
   workflow_dispatch:
   schedule:
     - cron: "10 3 * * *"

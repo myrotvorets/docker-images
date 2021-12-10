@@ -5,6 +5,7 @@ on:
     paths:
       - "tinc/**"
       - ".github/workflows/tinc.yml"
+      - ".github/build-image-action/action.yml"
   workflow_dispatch:
   schedule:
     - cron: "30 3 * * *"

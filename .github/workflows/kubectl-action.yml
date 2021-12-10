@@ -5,6 +5,7 @@ on:
     paths:
       - "kubectl-action/**"
       - ".github/workflows/kubectl-action.yml"
+      - ".github/build-image-action/action.yml"
   workflow_dispatch:
   schedule:
     - cron: "5 3 * * *"

@@ -2,6 +2,9 @@ name: Build kubectl-action image
 
 on:
   push:
+    paths:
+      - "kubectl-action/**"
+      - ".github/workflows/kubectl-action.yml"
   workflow_dispatch:
   schedule:
     - cron: "5 3 * * *"

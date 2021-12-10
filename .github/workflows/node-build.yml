@@ -2,6 +2,9 @@ name: Build node-build image
 
 on:
   push:
+    paths:
+      - "node-build/**"
+      - ".github/workflows/node-build.yml"
   workflow_dispatch:
   schedule:
     - cron: "10 3 * * *"

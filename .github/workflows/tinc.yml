@@ -2,6 +2,9 @@ name: Build tinc image
 
 on:
   push:
+    paths:
+      - "tinc/**"
+      - ".github/workflows/tinc.yml"
   workflow_dispatch:
   schedule:
     - cron: "30 3 * * *"

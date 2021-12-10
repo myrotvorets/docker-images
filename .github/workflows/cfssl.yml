@@ -2,6 +2,9 @@ name: Build cfssl image
 
 on:
   push:
+    paths:
+      - "cfssl/**"
+      - ".github/workflows/cfssl.yml"
   workflow_dispatch:
   schedule:
     - cron: "0 3 * * *"
@@ -18,3 +21,5 @@ jobs:
         uses: ./.github/build-image-action
         with:
           name: cfssl
+          docker-login: ${{ secrets.DOCKER_LOGIN }}
+          docker-password: ${{ secrets.DOCKER_PASSWORD }}

@@ -2,6 +2,9 @@ name: Build node-min image
 
 on:
   push:
+    paths:
+      - "node-min/**"
+      - ".github/workflows/node-min.yml"
   workflow_dispatch:
   schedule:
     - cron: "15 3 * * *"

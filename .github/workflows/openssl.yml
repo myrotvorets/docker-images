@@ -2,6 +2,9 @@ name: Build openssl image
 
 on:
   push:
+    paths:
+      - "openssl/**"
+      - ".github/workflows/openssl.yml"
   workflow_dispatch:
   schedule:
     - cron: "25 3 * * *"

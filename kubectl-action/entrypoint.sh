@@ -15,7 +15,7 @@ case "${KUBECTL_VERSION:=latest}" in
     ;;
 esac
 
-if [ ! -x "${KUBECTL}" ]; then
+if [ ! -x "/usr/local/bin/${KUBECTL}" ]; then
     echo "::warning::unknown kubectl version requested: ${KUBECTL_VERSION}"
     KUBECTL=kubectl
 fi

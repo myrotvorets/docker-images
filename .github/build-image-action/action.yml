@@ -56,6 +56,5 @@ runs:
     - name: Push the image
       shell: bash
       run: |
-        docker push "myrotvorets/${{ inputs.name }}:${{ github.sha }}"
         docker push "myrotvorets/${{ inputs.name }}:latest"
       if: ${{ github.event_name != 'push' || github.ref == 'refs/heads/master' }}

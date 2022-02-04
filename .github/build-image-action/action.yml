@@ -28,16 +28,13 @@ runs:
         load: true
         pull: true
         push: false
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
         tags: "myrotvorets/${{ inputs.name }}:${{ github.sha }},myrotvorets/${{ inputs.name }}:latest"
 
     - name: Security Scan
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "myrotvorets/${{ inputs.name }}:${{ github.sha }}"
-        format: template
-        template: "@/contrib/sarif.tpl"
+        format: sarif
         output: trivy-results.sarif
 
     - name: Upload Trivy scan results to GitHub Security tab

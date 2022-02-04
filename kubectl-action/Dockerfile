@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:3.15@sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118285c70fa8c9300
 RUN \
     apk --no-cache upgrade && \
     wget -q https://dl.k8s.io/release/v1.18.20/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl1.18 && \

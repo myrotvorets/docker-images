@@ -15,6 +15,9 @@ jobs:
   build:
     name: Build image
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - name: Check out the source code
         uses: actions/checkout@v2.4.0

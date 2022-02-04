@@ -28,12 +28,12 @@ runs:
         load: true
         pull: true
         push: false
-        tags: "myrotvorets/${{ inputs.name }}:${{ github.sha }},myrotvorets/${{ inputs.name }}:latest"
+        tags: "myrotvorets/${{ inputs.name }}:latest"
 
     - name: Security Scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: "myrotvorets/${{ inputs.name }}:${{ github.sha }}"
+        image-ref: "myrotvorets/${{ inputs.name }}:latest"
         format: sarif
         output: trivy-results.sarif
 

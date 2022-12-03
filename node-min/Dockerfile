@@ -1,6 +1,3 @@
 FROM alpine:3.17@sha256:8914eb54f968791faf6a8638949e480fef81e697984fba772b3976835194c6d4
-RUN \
-    apk --no-cache upgrade && \
-    apk add --no-cache nodejs=~16
-
+RUN apk add --no-cache nodejs=~18
 USER nobody:nogroup

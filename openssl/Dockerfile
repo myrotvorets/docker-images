@@ -2,7 +2,7 @@ FROM alpine:3.17@sha256:8914eb54f968791faf6a8638949e480fef81e697984fba772b397683
 
 RUN \
     apk --no-cache upgrade && \
-    apk add --no-cache openssl=~1.1
+    apk add --no-cache openssl=~3
 
 USER nobody:nobody
 ENTRYPOINT ["/usr/bin/openssl"]

@@ -6,7 +6,8 @@ if [ ! -d "/etc/tinc/${NETWORK_NAME}" ]; then
     : "${NETWORK_ADDRESS:?"NETWORK_ADDRESS environment variable is not set"}"
 
     if [ -n "${SERVER:-}" ]; then
-        /usr/sbin/tinc -n "${NETWORK_NAME}" init "${NODE_NAME:-$(hostname)}"
+        : "${NODE_NAME:=$(hostname || true)}"
+        /usr/sbin/tinc -n "${NETWORK_NAME}" init "${NODE_NAME}"
         cat > "/etc/tinc/${NETWORK_NAME}/invitation-created" <<'EOF'
 #!/bin/sh
 

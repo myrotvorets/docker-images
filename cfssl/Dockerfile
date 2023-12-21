@@ -1,4 +1,4 @@
-FROM alpine:edge@sha256:f2d1645cd73c7e54584dc225da0b5229d19223412d719669ebda764f41396853
+FROM alpine:edge@sha256:9f867dc20de5aa9690c5ef6c2c81ce35a918c0007f6eac27df90d3166eaa5cc0
 RUN \
     apk --no-cache upgrade && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \

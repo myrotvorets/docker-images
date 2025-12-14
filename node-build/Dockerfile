@@ -1,7 +1,7 @@
 FROM alpine:3.23@sha256:51183f2cfa6320055da30872f211093f9ff1d3cf06f39a0bdb212314c5dc7375
 
 RUN \
-    apk add --no-cache g++=~14 make=~4 nodejs=~22 npm=~11 python3=~3 && \
+    apk add --no-cache g++=~15 make=~4 nodejs=~24 npm=~11 python3=~3 && \
     install -m 0755 -o nobody -g nogroup -d /.npm
 
 ENV \

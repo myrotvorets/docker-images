@@ -31,7 +31,7 @@ runs:
         tags: "myrotvorets/${{ inputs.name }}:latest"
 
     - name: Security Scan
-      uses: aquasecurity/trivy-action@master
+      uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # master
       with:
         image-ref: "myrotvorets/${{ inputs.name }}:latest"
         format: sarif
